@@ -1,3 +1,67 @@
+
+variable "my_secret_value" {
+  description = "Secret retrieved from Azure Key Vault"
+  type        = string
+  sensitive   = true
+}
+
+
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "East US"
+
+  tags = {
+    secret_value = var.my_secret_value  # Use the variable
+  }
+}
+
+
+provider "azurerm" {
+  features {}
+}
+
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: MyVariableGroup  # Optional: Variable group for non-secret variables
+
+stages:
+- stage: Terraform_Deploy
+  displayName: 'Terraform Deployment'
+  jobs:
+  - job: Terraform
+    steps:
+
+    - task: AzureKeyVault@2
+      displayName: 'Retrieve Secrets from Key Vault'
+      inputs:
+        azureSubscription: 'MyAzureServiceConnection'  # Service connection name
+        KeyVaultName: 'my-keyvault-name'  # Azure Key Vault name
+        SecretsFilter: '*'  # Fetch all secrets
+
+    - script: |
+        echo "Initializing Terraform..."
+        terraform init
+      displayName: 'Terraform Init'
+
+    - script: |
+        echo "Applying Terraform Configuration..."
+        terraform apply -auto-approve
+      displayName: 'Terraform Apply'
+      env:
+        TF_VAR_my_secret_value: $(my-secret-key)  # Pass secret securely
+
+
+
+
+
+
+
 Introduction "Today, I'd like to walk you through an automated solution we’ve implemented to streamline our log management processes in the Terraform deployment pipeline. This solution allows us to append filtered log data efficiently, ensuring relevant details are saved for review while keeping the process straightforward and reproducible."
 Key Details of the Solution
 
