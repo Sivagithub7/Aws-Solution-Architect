@@ -1,3 +1,27 @@
+nitializing the backend...
+╷
+│ Error: Failed to get existing workspaces: Error retrieving keys for Storage Account "testing198": storage.AccountsClient#ListKeys: Failure responding to request: StatusCode=403 -- Original Error: autorest/azure: Service returned an error. Status=403 Code="AuthorizationFailed" Message="The client '3bc7e3cc-6153-461f-ae56-8ecf92a4d1d9' with object id '3bc7e3cc-6153-461f-ae56-8ecf92a4d1d9' does not have authorization to perform action 'Microsoft.Storage/storageAccounts/listKeys/action' over scope '/subscriptions/2a246382-c5b9-4338-a334-0f747c7f8b45/resourceGroups/SampleGroup/providers/Microsoft.Storage/storageAccounts/testing198' or the scope is invalid. If access was recently granted, please refresh your credentials."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Downloading secret value for: TestingR.
 ##[error]
 TestingR: "Caller is not authorized to perform action on resource.\r\nIf role assignments, deny assignments or role definitions were changed recently, please observe propagation time.\r\nCaller: appid=***;oid=3bc7e3cc-6153-461f-ae56-8ecf92a4d1d9;iss=https://sts.windows.net/30bc593f-daa9-4572-91c5-1bb9c696f432/\r\nAction: 'Microsoft.KeyVault/vaults/secrets/getSecret/action'\r\nResource: '/subscriptions/2a246382-c5b9-4338-a334-0f747c7f8b45/resourcegroups/sampletesting/providers/microsoft.keyvault/vaults/testingvalues/secrets/testingr'\r\nAssignment: (not found)\r\nDenyAssignmentId: null\r\nDecisionReason: null \r\nVault: TestingValues;location=eastus\r\n. The specified Azure service connection needs to have Get, List secret management permissions on the selected key vault. To set these permissions, download the ProvisionKeyVaultPermissions.ps1 script from build/release logs and execute it, or set them from the Azure portal."
